@@ -1,1 +1,0 @@
-This is just a basic readme, it will be updated throughout the timeline of the project with more details and descriptions. 
