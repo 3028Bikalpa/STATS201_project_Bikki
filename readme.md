@@ -1,29 +1,34 @@
-# Animal Classification Using Machine Learning
+# Predicting Population Decline from Migration and Demographic Data
 
 ## Research Question
-Can machine learning models accurately classify animals based on image data?
 
-## Project Description
-In this project, we use machine learning for the classification of animals based on images. We train several models using pictures of four animals and evaluate which model predicts the animal with the least error.
+**Can past migration trends and demographic indicators be used to predict whether a country will enter a period of population decline within the next _N_ years?**
 
-This project is approached as an image classification task. Images of four animals are used as input to train the model. Currently, there are 1,000 pictures for each animal, but the dataset might be increased by mirroring the images or zooming in. I may try to apply these techniques, but I am not sure if I will be able to do so.
+This project uses a global country–year dataset containing population and migration data for **186 countries** from **1960 to 2023**. The project is framed as a **supervised time-series prediction task**, where machine learning models are trained on historical observations and evaluated on future data using a temporal train–test split.
 
-This project demonstrates how visual data can be used as input for machine learning models to distinguish between different animal species.
+The goal of the project is to assess whether migration and demographic variables contain predictive information about future population decline and to interpret model behavior in a social science context rather than to make causal claims.
+
+---
 
 ## Unit of Analysis
-The unit of analysis for this project is a single animal image.
+
+The unit of analysis for this project is a **country–year observation**, where each row corresponds to one country in one year.
+
+---
 
 ## Data Source
-This project uses a publicly available dataset from Kaggle, which can be accessed using the link below:  
-https://www.kaggle.com/datasets/ayushv322/animal-classification?resource=download
 
-The data was downloaded and saved in the working directory for this project and then loaded into the notebook file.
+This project uses a publicly available dataset from **Kaggle**:
 
-As mentioned earlier, I might try mirroring, zooming in, or making other adjustments to generate more data from the existing images. This will depend on my skills and time commitment, as I am still learning how to apply these techniques.
+- Dataset: *Global Population and Migration Dataset*
+- Link: https://www.kaggle.com/datasets/hashimkhanwazir/global-population-and-migration-dataset
+
+The dataset includes population and migration indicators for 186 countries over a 64-year period, resulting in **11,904 country–year observations**.
+
+---
 
 ## Feasibility Assessment
-The number of pictures should not be a problem for this project. If needed, additional image datasets can be obtained from the internet.
 
-Some challenges may include differences in image quality and lighting, which could affect the model’s performance.
+The dataset provides sufficient temporal coverage and cross-national variation to support a supervised machine learning task. Key population and migration variables are observed prior to the prediction target, allowing for a clean temporal train–test split and avoiding information leakage.
 
-Overall, this project is feasible and suitable for applying supervised machine learning techniques to image data.
+While some heterogeneity across countries and missing values may be present, the overall size and structure of the dataset make it well-suited for training and evaluating predictive models of population decline.
