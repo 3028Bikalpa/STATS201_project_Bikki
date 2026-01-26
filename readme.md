@@ -159,6 +159,7 @@ Due to class imbalance and the importance of identifying decline events, particu
 - ROC-AUC: 0.8416  
 
 ### Decision Tree Classifier (Depth = 5)
+![alt text](decision_tree.png)
 
 - Accuracy: 0.9227  
 - Precision: 0.8807  
