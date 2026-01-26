@@ -90,7 +90,7 @@ Exploratory analysis was conducted to better understand trends and patterns in t
 - Temporal patterns across countries
 - Feature distributions and correlations
 
-![alt text](image.png)  
+![Class distribution in train and test set](Assets/image.png)  
 *Class distribution in training and test sets*
 
 ---
@@ -122,7 +122,7 @@ Logistic Regression was selected due to its interpretability and effectiveness i
 
 The Decision Tree model captures non-linear relationships and interaction effects between features without requiring explicit transformations. This model demonstrated the strongest overall performance.
 
-![alt text](image-1.png)  
+![Baseline Model Perfomance Comparision](Assets/image-1.png)  
 *Comparison of Dummy Classifier, Logistic Regression, and Decision Tree Classifier*
 
 ---
@@ -159,7 +159,7 @@ Due to class imbalance and the importance of identifying decline events, particu
 - ROC-AUC: 0.8416  
 
 ### Decision Tree Classifier (Depth = 5)
-![alt text](decision_tree.png)
+![Decision treee](Assets/decision_tree.png)
 
 - Accuracy: 0.9227  
 - Precision: 0.8807  
