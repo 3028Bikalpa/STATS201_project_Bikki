@@ -1,6 +1,25 @@
 # Predicting Population Decline Using Demographic and Migration Data
-
 ## Project Overview
+- [Predicting Population Decline Using Demographic and Migration Data](#predicting-population-decline-using-demographic-and-migration-data)
+  - [Project Overview](#project-overview)
+  - [Research Question](#research-question)
+  - [Project Description](#project-description)
+  - [Unit of Analysis](#unit-of-analysis)
+  - [Data Source](#data-source)
+  - [Data Preparation and Feature Engineering](#data-preparation-and-feature-engineering)
+  - [Exploratory Data Analysis](#exploratory-data-analysis)
+  - [Train/Test Split Strategy](#traintest-split-strategy)
+  - [Models Implemented](#models-implemented)
+    - [Dummy Classifier](#dummy-classifier)
+    - [Logistic Regression](#logistic-regression)
+    - [Decision Tree Classifier](#decision-tree-classifier)
+  - [Evaluation Metrics](#evaluation-metrics)
+  - [Results Summary](#results-summary)
+    - [Dummy Classifier](#dummy-classifier-1)
+    - [Logistic Regression](#logistic-regression-1)
+    - [Decision Tree Classifier (Depth = 5)](#decision-tree-classifier-depth--5)
+  - [Interpretation](#interpretation)
+  - [Future Work](#future-work)
 
 This project investigates whether demographic and migration indicators can provide reliable early warning signals of population decline. Using historical population and migration data, the goal is to build predictive models that determine whether a country will experience population decline within the next five years.
 
