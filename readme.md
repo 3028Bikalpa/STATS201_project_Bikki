@@ -8,6 +8,20 @@ The repository is organized around two Jupyter notebooks:
 - **`train_models.ipynb`** → temporal split, scaling, baselines, advanced models, comparisons, and interpretation
 
 ---
+- [Life Expectancy Forecasting (Time-Series + ML)](#life-expectancy-forecasting-time-series--ml)
+  - [Project Goal](#project-goal)
+  - [Dataset](#dataset)
+  - [Notebook 1 — `data_cleaning.ipynb` (Cleaning + Feature Engineering)](#notebook-1--data_cleaningipynb-cleaning--feature-engineering)
+    - [What happens in this notebook](#what-happens-in-this-notebook)
+    - [Key numbers (from the notebook)](#key-numbers-from-the-notebook)
+    - [Visual outputs to include](#visual-outputs-to-include)
+  - [Notebook 2 — `train_models.ipynb` (Model Training + Evaluation)](#notebook-2--train_modelsipynb-model-training--evaluation)
+    - [What happens in this notebook](#what-happens-in-this-notebook-1)
+  - [Train/Test Split Summary (Temporal)](#traintest-split-summary-temporal)
+  - [Model Results (Most Important Numbers)](#model-results-most-important-numbers)
+    - [Baselines (Week 3)](#baselines-week-3)
+    - [Advanced Models + Feature-Set Comparison (Week 4)](#advanced-models--feature-set-comparison-week-4)
+  - [What Drives Predictions? (Feature Importance Highlights)](#what-drives-predictions-feature-importance-highlights)
 
 ## Project Goal
 
