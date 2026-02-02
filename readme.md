@@ -3,8 +3,8 @@
   - [Dataset](#dataset)
   - [Notebook 1 — `data_cleaning.ipynb` (Cleaning + Feature Engineering)](#notebook-1--data_cleaningipynb-cleaning--feature-engineering)
     - [What happens in this notebook](#what-happens-in-this-notebook)
-    - [Key numbers (from the notebook)](#key-numbers-from-the-notebook)
-    - [Visual outputs to include](#visual-outputs-to-include)
+    - [Key numbers](#key-numbers)
+    - [Some Visual outputs](#some-visual-outputs)
   - [Notebook 2 — `train_models.ipynb` (Model Training + Evaluation)](#notebook-2--train_modelsipynb-model-training--evaluation)
     - [What happens in this notebook](#what-happens-in-this-notebook-1)
   - [Train/Test Split Summary (Temporal)](#traintest-split-summary-temporal)
@@ -59,7 +59,7 @@ Predict **Life Expectancy** using country-level health/economic indicators and *
    - correlations with the target
    - scatter plots for top correlated predictors
 
-### Key numbers (from the notebook)
+### Key numbers
 
 **Raw dataset**
 - Rows: **2938**
@@ -97,7 +97,7 @@ Predict **Life Expectancy** using country-level health/economic indicators and *
 - This notebook **does not impute** missing predictor values.
 - Imputation is deferred to model training to avoid temporal leakage.
 
-### Visual outputs to include
+### Some Visual outputs
 
 - **Target distribution (histogram + boxplot)**
 ![alt text](images/life_expectancy_distribution.png)
