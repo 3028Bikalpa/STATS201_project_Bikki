@@ -1,13 +1,3 @@
-# Life Expectancy Forecasting (Time-Series + ML)
-
-This project builds an end-to-end workflow to **clean and prepare the WHO Life Expectancy dataset**, engineer **time-series features** (lags, rolling means, YoY change), and **train/evaluate multiple regression models** to predict **Life Expectancy (years)**.
-
-The repository is organized around two Jupyter notebooks:
-
-- **`data_cleaning.ipynb`** → data loading, quality checks, cleaning decisions, EDA, and feature engineering
-- **`train_models.ipynb`** → temporal split, scaling, baselines, advanced models, comparisons, and interpretation
-
----
 - [Life Expectancy Forecasting (Time-Series + ML)](#life-expectancy-forecasting-time-series--ml)
   - [Project Goal](#project-goal)
   - [Dataset](#dataset)
@@ -22,6 +12,16 @@ The repository is organized around two Jupyter notebooks:
     - [Baselines (Week 3)](#baselines-week-3)
     - [Advanced Models + Feature-Set Comparison (Week 4)](#advanced-models--feature-set-comparison-week-4)
   - [What Drives Predictions? (Feature Importance Highlights)](#what-drives-predictions-feature-importance-highlights)
+# Life Expectancy Forecasting (Time-Series + ML)
+
+This project builds an end-to-end workflow to **clean and prepare the WHO Life Expectancy dataset**, engineer **time-series features** (lags, rolling means, YoY change), and **train/evaluate multiple regression models** to predict **Life Expectancy (years)**.
+
+The repository is organized around two Jupyter notebooks:
+
+- **`data_cleaning.ipynb`** → data loading, quality checks, cleaning decisions, EDA, and feature engineering
+- **`train_models.ipynb`** → temporal split, scaling, baselines, advanced models, comparisons, and interpretation
+
+---
 
 ## Project Goal
 
