@@ -1,0 +1,10 @@
+RESIDUAL DIAGNOSTIC TESTS
+Shapiro-Wilk: stat=0.9812, p=0.0001045 => Not normal
+Breusch-Pagan: stat=34.6368, p=0.1807 => Homoscedastic
+Durbin-Watson: 1.4425 (2.0 ~ no autocorrelation)
+
+INTERPRETATION
+- Residuals approximately normal? Not normal. If not normal, inference on errors may be less reliable.
+- Variance constant (homoscedastic)? Homoscedastic. If heteroscedastic, prediction intervals may be biased.
+- Influential outliers detected (Cook's D > 0.5): None
+- Diagnostics suggest assumptions are met if normality and homoscedasticity hold, and no strong influential points exist.
