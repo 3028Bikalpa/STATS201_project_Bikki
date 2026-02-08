@@ -43,7 +43,7 @@
     - [Feature Importance Comparison](#feature-importance-comparison)
   - [7. Outputs Saved](#7-outputs-saved)
 - [Week 5: Addressing Data Leakage and Methodological Improvements](#week-5-addressing-data-leakage-and-methodological-improvements)
-  - [Instructor Feedback and Revisions](#instructor-feedback-and-revisions)
+  - [Feedback and Revisions](#feedback-and-revisions)
     - [Key Feedback Points](#key-feedback-points)
   - [Major Changes Implemented](#major-changes-implemented)
     - [1. Removed Lag Features (Critical Fix)](#1-removed-lag-features-critical-fix)
@@ -438,7 +438,7 @@ Depending on which sections you run, the notebook writes:
 
 # Week 5: Addressing Data Leakage and Methodological Improvements
 
-## Instructor Feedback and Revisions
+## Feedback and Revisions
 
 Following Week 4 submission, several critical methodological issues were identified that required fundamental changes to the project approach:
 
