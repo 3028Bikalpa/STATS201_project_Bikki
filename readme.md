@@ -50,7 +50,6 @@
     - [3. Updated Feature Set](#3-updated-feature-set)
     - [4. Realistic Performance Expectations](#4-realistic-performance-expectations)
     - [5. Updated Correlation Analysis](#5-updated-correlation-analysis)
-    - [6. Corrected Feature Engineering Documentation](#6-corrected-feature-engineering-documentation)
   - [Updated Model Performance Results](#updated-model-performance-results)
     - [Week 5 Baseline Models (Without Lag Features)](#week-5-baseline-models-without-lag-features)
     - [Feature Importance Analysis](#feature-importance-analysis)
@@ -571,22 +570,6 @@ This represents true **time series forecasting** where:
 With lag features removed, the correlation structure changed. The dataset now shows true relationships between health/economic indicators and life expectancy without artificial correlations from target-derived features.
 
 ![Correlation Matrix](images/correlation_matrix_top10.png)
-
----
-
-### 6. Corrected Feature Engineering Documentation
-
-**Clarification**:
-- **Week 3-4 (mislabeled)**: Feature selection and polynomial features, NOT true feature engineering
-- **Actual Feature Engineering** (if implemented in future): Domain-specific feature creation such as:
-  - Health access score: `(Hepatitis_B + Polio + Diphtheria) / 3`
-  - Economic-health interaction: `GDP * Schooling`
-  - Mortality-to-health ratio: `Adult_Mortality / BMI`
-
-**Updated Documentation**:
-- Removed misleading language about "sophisticated relationships"
-- Accurately describe polynomial features as mathematical transformations
-- Distinguish between feature selection (choosing existing features) and feature creation (deriving new features)
 
 ---
 
