@@ -44,7 +44,6 @@
   - [7. Outputs Saved](#7-outputs-saved)
 - [Week 5: Addressing Data Leakage and Methodological Improvements](#week-5-addressing-data-leakage-and-methodological-improvements)
   - [Feedback and Revisions](#feedback-and-revisions)
-    - [Key Feedback Points](#key-feedback-points)
   - [Major Changes Implemented](#major-changes-implemented)
     - [1. Removed Lag Features (Critical Fix)](#1-removed-lag-features-critical-fix)
     - [2. Refined Temporal Split Strategy](#2-refined-temporal-split-strategy)
@@ -440,19 +439,6 @@ Depending on which sections you run, the notebook writes:
 
 ## Feedback and Revisions
 
-Following Week 4 submission, several critical methodological issues were identified that required fundamental changes to the project approach:
-
-### Key Feedback Points
-
-1. **Data Leakage Problem**: The high R² values (>0.95) indicated data leakage rather than strong model performance. Life expectancy changes gradually year-over-year, so including lag features (previous years' life expectancy) made prediction trivial.
-
-2. **Temporal Split Concerns**: While a temporal split was used, pooling all countries within each time period didn't fully respect the time series nature of the data.
-
-3. **Feature Engineering Mischaracterization**: What was labeled as "feature engineering" was primarily feature selection, not the creation of meaningful new features.
-
-4. **Writing Style**: Documentation contained marketing-style language ("sophisticated relationships", "interconnected reality") inappropriate for technical documentation.
-
----
 
 ## Major Changes Implemented
 
