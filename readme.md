@@ -164,7 +164,7 @@ This section checks:
 The notebook summarizes missingness by feature and visualizes missing value percentages.
 
 
-![alt text](images/missing_values.png)
+![alt text](old_images/missing_values.png)
 
 ---
 
@@ -207,7 +207,7 @@ The notebook computes outlier bounds using a conservative IQR rule:
 It reports potential outliers (but does not necessarily drop them unless you extend the notebook).
 
 
-![alt text](images/life_expectancy_distribution.png)
+![alt text](old_images/life_expectancy_distribution.png)
 
 ---
 
@@ -253,7 +253,7 @@ The notebook prints missing counts and explicitly states imputation happens in m
 
 Produces status-based life expectancy comparisons and trends over time.
 
-![alt text](images/life_expectancy_by_status.png)
+![alt text](old_images/life_expectancy_by_status.png)
 
 ---
 
@@ -261,7 +261,7 @@ Produces status-based life expectancy comparisons and trends over time.
 
 Computes correlation between numeric predictors and target, then visualizes a correlation matrix of top features.
 
-![alt text](images/correlation_matrix_top10.png)
+![alt text](old_images/correlation_matrix_top10.png)
 
 ---
 
@@ -269,7 +269,7 @@ Computes correlation between numeric predictors and target, then visualizes a co
 
 Plots histograms of the most correlated features.
 
-![alt text](images/top_features_distributions.png)
+![alt text](old_images/top_features_distributions.png)
 
 ---
 
@@ -277,7 +277,7 @@ Plots histograms of the most correlated features.
 
 Plots life expectancy vs the top positively correlated predictors, split by `Status`.
 
-![alt text](images/scatter_plots_top_features.png)
+![alt text](old_images/scatter_plots_top_features.png)
 
 ---
 
@@ -314,7 +314,7 @@ This notebook uses a **time-respecting split** rather than random splitting.
 
 **Goal:** train on earlier years, test on later years.
 
-![alt text](images/train_test_distribution.png)
+![alt text](old_images/train_test_distribution.png)
 
 ---
 
@@ -341,14 +341,14 @@ All models are evaluated using standard regression metrics:
 ### Model 2: Linear Regression
 Trains a linear baseline and visualizes coefficient magnitudes.
 
-![alt text](images/linear_regression_coefficients.png)
+![alt text](old_images/linear_regression_coefficients.png)
 
 ---
 
 ### Model 3: Decision Tree Regressor
 Trains a non-linear baseline and visualizes feature importances.
 
-![alt text](images/decision_tree_importances.png)
+![alt text](old_images/decision_tree_importances.png)
 
 ---
 
@@ -356,7 +356,7 @@ Trains a non-linear baseline and visualizes feature importances.
 
 The notebook produces model comparison plots and exports baseline results.
 
-![alt text](images/model_comparison.png)
+![alt text](old_images/model_comparison.png)
 
 **Saved table:**
 - `baseline_model_results.csv`
@@ -389,9 +389,9 @@ The Week 4 notebook trains and compares:
 
 The notebook generates an overall comparison plot/table across models and feature sets.
 
-![alt text](images/week4_comprehensive_comparison.png)
+![alt text](old_images/week4_comprehensive_comparison.png)
 
-![alt text](images/week4_model_predictions_comparison.png)
+![alt text](old_images/week4_model_predictions_comparison.png)
 
 ---
 
@@ -399,7 +399,7 @@ The notebook generates an overall comparison plot/table across models and featur
 
 Residual distributions are created for error-shape inspection.
 
-![alt text](images/week4_residual_distributions.png)
+![alt text](old_images/week4_residual_distributions.png)
 
 ---
 
@@ -409,7 +409,7 @@ Feature importance/coefficients are extracted for:
 - Random Forest + Gradient Boosting (`feature_importances_`)
 - Ridge + Lasso (`|coef_|`)
 
-![alt text](images/week4_feature_importance_comparison.png)
+![alt text](old_images/week4_feature_importance_comparison.png)
 
 ---
 
