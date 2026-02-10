@@ -55,22 +55,9 @@
     - [Feature Importance Analysis](#feature-importance-analysis)
     - [Prediction and Residual Analysis](#prediction-and-residual-analysis)
     - [Week 4 Advanced Models Performance](#week-4-advanced-models-performance)
-  - [Error Analysis](#error-analysis)
   - [Lessons Learned](#lessons-learned)
     - [1. Data Leakage is Subtle](#1-data-leakage-is-subtle)
     - [2. High Performance Can Indicate Problems](#2-high-performance-can-indicate-problems)
-    - [3. Temporal Data Requires Extra Vigilance](#3-temporal-data-requires-extra-vigilance)
-    - [4. Documentation Clarity Matters](#4-documentation-clarity-matters)
-    - [5. Temporal Split ≠ Time Series Model](#5-temporal-split--time-series-model)
-  - [Updated Research Question](#updated-research-question)
-  - [Updated Pipeline Workflow](#updated-pipeline-workflow)
-    - [Data Cleaning Pipeline](#data-cleaning-pipeline)
-    - [Model Training Pipeline](#model-training-pipeline)
-  - [Methodological Integrity Summary](#methodological-integrity-summary)
-  - [File Structure After Week 5 Changes](#file-structure-after-week-5-changes)
-  - [Next Steps and Future Work](#next-steps-and-future-work)
-    - [Immediate (Week 6+)](#immediate-week-6)
-    - [Long-term Considerations](#long-term-considerations)
   - [Conclusion](#conclusion)
 
 # STATS 201 Course Project  
@@ -615,10 +602,7 @@ All models were retrained using only the 20 health/economic indicator features, 
 
 ![Residual Analysis](images/residual_analysis.png)
 
-![Residual Diagnostics](images/residual_diagnostics.png)
-
 **Residual Patterns**:
-- More variance in residuals (realistic)
 - Some outliers present
 - Generally centered around zero (unbiased predictions)
 
@@ -636,19 +620,6 @@ All models were retrained using only the 20 health/economic indicator features, 
 
 ---
 
-## Error Analysis
-
-**Error Patterns**:
-
-![Error Patterns](images/error_patterns.png)
-
-**Key Findings**:
-- Prediction errors vary by country development status
-- Larger errors for countries with rapid health/economic transitions
-- Model performance more stable for developed countries
-
----
-
 ## Lessons Learned
 
 ### 1. Data Leakage is Subtle
@@ -657,118 +628,9 @@ Using lag features seemed methodologically sound for time series, but created a 
 ### 2. High Performance Can Indicate Problems
 R² > 0.95 should have been a red flag, not a success metric. Life expectancy prediction from socioeconomic factors alone should not be nearly perfect. When something seems too good to be true, it usually is.
 
-### 3. Temporal Data Requires Extra Vigilance
-Every feature must be scrutinized: **"Could this feature only be known after observing the target?"** If yes, it creates leakage.
-
-### 4. Documentation Clarity Matters
-Technical writing should be precise and factual, avoiding promotional language that obscures methodology. Science requires honest, clear communication.
-
-### 5. Temporal Split ≠ Time Series Model
-Simply splitting data temporally doesn't automatically make it a proper time series forecast. Pooling all countries within each time period doesn't account for country-specific temporal patterns.
 
 ---
 
-## Updated Research Question
-
-> **How accurately can we forecast future life expectancy (2014-2015) using historical health and economic indicators (2000-2013), without access to recent life expectancy trends?**
-
-This reframing emphasizes:
-- **Forecasting** (not fitting historical data)
-- **Historical indicators only** (no target-derived features)
-- **Realistic evaluation** (true test of predictive power)
-
----
-
-## Updated Pipeline Workflow
-
-### Data Cleaning Pipeline
-```
-Input: Life Expectancy Data.csv (2938 rows, 22 columns)
-  ↓
-Remove missing targets
-  ↓
-Remove duplicates (Country-Year)
-  ↓
-Encode categorical variables (Status → Status_Encoded)
-  ↓
-Create Years_Since_2000 = Year - 2000
-  ↓
-[REMOVED IN WEEK 5: Lag feature creation]
-  ↓
-Validation: Ensure no lag features present (expected 24 columns)
-  ↓
-Output: clean_dataset.csv (2928 rows, 24 columns)
-```
-
-### Model Training Pipeline
-```
-Input: clean_dataset.csv
-  ↓
-Temporal Split: Train (2000-2013) | Test (2014-2015)
-  ↓
-Handle missing values (SimpleImputer fit on train only)
-  ↓
-Scale features (StandardScaler fit on train only)
-  ↓
-Train models on historical data
-  ↓
-Evaluate on future years
-  ↓
-Output: Model results and visualizations
-```
-
----
-
-## Methodological Integrity Summary
-
-| Aspect | Week 4 (Before) | Week 5 (After) |
-|--------|----------------|---------------|
-| **Lag Features** | Included (6 features) | Removed |
-| **Total Features** | 30 | 24 |
-| **Data Leakage** | Present | Eliminated |
-| **R² Values** | 0.95-0.97 (inflated) | 0.75-0.85 (realistic) |
-| **RMSE** | 1-2 years (unrealistic) | 3-5 years (realistic) |
-| **Evaluation Type** | Interpolation | True Forecasting |
-| **Feature Engineering Label** | Inaccurate | Corrected |
-| **Documentation Style** | Marketing-like | Technical |
-| **Train Years** | 2000-2013 | 2000-2013 |
-| **Test Years** | 2014-2015 | 2014-2015 |
-
----
-
-## File Structure After Week 5 Changes
-
-**Dataset Files**:
-- `clean_dataset.csv` → **24 columns** (no lag features)
-- Shape: (2928, 24)
-
-**Validation Checks** (in `data_cleaning.ipynb`):
-- Pre-save validation confirms no lag features present
-- Column count verification (expected: 24, not 30)
-- Explicit console output showing lag feature removal
-
-**Model Outputs** (in `train_models.ipynb`):
-- All training uses lag-free dataset
-- Temporal split enforced: years <= 2013 train, years >= 2014 test
-- Imputation and scaling fit only on training data
-
----
-
-## Next Steps and Future Work
-
-### Immediate (Week 6+)
-1. **True Feature Engineering**: Create domain-specific composite features based on health/economic relationships
-2. **Country-Specific Models**: Train separate models for Developed vs Developing countries
-3. **Advanced Algorithms**: Explore XGBoost, LightGBM with proper temporal cross-validation
-4. **Uncertainty Quantification**: Add prediction intervals to understand forecast confidence
-
-### Long-term Considerations
-1. **Panel Data Methods**: Consider fixed effects models that account for country-specific baselines
-2. **External Validation**: Test on completely held-out countries (not just held-out years)
-3. **Temporal Cross-Validation**: Implement rolling window validation for robust time series evaluation
-4. **Causal Analysis**: Investigate causal relationships between health interventions and life expectancy
-
----
 
 ## Conclusion
 
