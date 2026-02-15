@@ -59,6 +59,21 @@
     - [1. Data Leakage is Subtle](#1-data-leakage-is-subtle)
     - [2. High Performance Can Indicate Problems](#2-high-performance-can-indicate-problems)
   - [Conclusion](#conclusion)
+- [Week 6: Synthesis \& Communication Readiness](#week-6-synthesis--communication-readiness)
+  - [Overview](#overview)
+  - [Changes to `train_models.ipynb`](#changes-to-train_modelsipynb)
+    - [New Cell 106 — Section Header (Markdown)](#new-cell-106--section-header-markdown)
+    - [New Cell 107 — Synthesis Pipeline (Code)](#new-cell-107--synthesis-pipeline-code)
+  - [Final Model Selection](#final-model-selection)
+    - [Top 5 Models by Test R²](#top-5-models-by-test-r)
+  - [Justification for Stopping](#justification-for-stopping)
+  - [Substantive Interpretation of Results](#substantive-interpretation-of-results)
+  - [Limitations and Scope](#limitations-and-scope)
+  - [Draft Presentation Figures](#draft-presentation-figures)
+  - [Saved Artifacts](#saved-artifacts)
+  - [Week 6 Deliverable Checklist](#week-6-deliverable-checklist)
+  - [Conclusion](#conclusion-1)
+
 
 # STATS 201 Course Project  
 ## Time Series Prediction of Life Expectancy (Data Cleaning ➜ Model Training)
@@ -641,3 +656,138 @@ This project now represents a legitimate **time series forecasting task** rather
 **Key Takeaway**: Scientific integrity requires honest evaluation, even when it means reporting lower performance metrics. The goal is accurate prediction and methodological soundness, not impressive-looking numbers that result from data leakage.
 
 ---
+# Week 6: Synthesis & Communication Readiness
+
+## Overview
+
+Week 6 represents the final synthesis milestone. The primary objectives were to finalize the selected model, provide a stopping justification, produce a substantive interpretation of results for a social science audience, document clear limitations and scope, and generate draft presentation figures. All artifacts have been saved to the repository.
+
+---
+
+## Changes to `train_models.ipynb`
+
+Two new cells (106–107) were added at the end of the notebook to implement the **Week 6 Synthesis Pipeline**. Minor import adjustments (`pathlib.Path`) were also made in earlier cells (3 and 94) to support path handling for artifact saving. All prior Week 3–5 code remains unchanged.
+
+### New Cell 106 — Section Header (Markdown)
+Introduces the Week 6 synthesis section and lists the deliverables:
+- Final selected model + stopping justification
+- Substantive interpretation summary
+- Clear limitations and scope statement
+- Draft presentation figures and saved artifact files
+
+### New Cell 107 — Synthesis Pipeline (Code)
+A single comprehensive code cell that:
+1. **Normalizes the model comparison table** from Week 4 results
+2. **Selects the final model** by ranking all 12 model–feature-set combinations by Test R² and generalization gap
+3. **Generates a stopping justification** as a JSON metadata file
+4. **Saves the trained model** as a `.joblib` artifact
+5. **Writes interpretation and limitations** to a text file
+6. **Produces a four-panel draft presentation figure** (saved as PNG)
+7. **Prints a deliverable status checklist** confirming all milestones are met
+
+---
+
+## Final Model Selection
+
+After evaluating twelve model–feature-set combinations across four model families (Gradient Boosting, Random Forest, Ridge, Lasso) and three feature sets (Baseline, Engineered, Polynomial), the **Gradient Boosting Regressor with Engineered Features** was selected as the final model.
+
+| Metric | Value |
+|--------|-------|
+| Test R² | 0.9436 |
+| Train R² | 0.9868 |
+| Test RMSE | 1.98 years |
+| Test MAE | 1.49 years |
+| Generalization Gap (Train R² − Test R²) | 0.0432 |
+| Margin over Runner-Up Test R² | 0.0054 |
+
+### Top 5 Models by Test R²
+
+| Rank | Model | Feature Set | Test R² | R² Gap |
+|------|-------|-------------|---------|--------|
+| 1 | Gradient Boosting | Engineered | 0.9436 | 0.0432 |
+| 2 | Gradient Boosting | Polynomial | 0.9382 | 0.0488 |
+| 3 | Random Forest | Engineered | 0.9368 | 0.0451 |
+| 4 | Gradient Boosting | Baseline | 0.9354 | 0.0521 |
+| 5 | Random Forest | Polynomial | 0.9313 | 0.0535 |
+
+---
+
+## Justification for Stopping
+
+The model selection process was stopped based on three observations:
+
+1. **Diminishing returns**: The margin between the best model (GB Engineered, R² = 0.9436) and the runner-up (GB Polynomial, R² = 0.9382) is only 0.0054 — well below the 0.01 threshold for meaningful improvement.
+2. **Acceptable generalization gap**: The Train–Test R² gap of 0.0432 confirms the model is not severely overfitting.
+3. **Exhausted model families**: No additional model family or feature combination produced a gain greater than 0.01 in Test R² over the selected model.
+
+---
+
+## Substantive Interpretation of Results
+
+From a social science perspective, the final model confirms that life expectancy is most strongly predicted by a combination of **health burden indicators** and **socioeconomic development measures**.
+
+**Top Predictive Features** (from the engineered feature set):
+1. **Adult Mortality** — strong negative association with life expectancy
+2. **HIV/AIDS prevalence** — strong negative association
+3. **Income Composition of Resources** — strong positive association
+4. **Schooling** — strong positive association
+5. **BMI** — positive association
+
+These findings align with established public health literature: mortality risk factors and access to education and economic resources are central determinants of population health outcomes.
+
+**Error patterns**: The largest prediction errors (up to 8.6 years) occur for countries undergoing rapid transitions (e.g., Zimbabwe's post-crisis recovery) or nations with extreme HIV/AIDS burdens. Developing countries account for a disproportionate share of high-error cases, suggesting the model has more difficulty capturing health-system heterogeneity in lower-income settings.
+
+**Temporal robustness**: Test R² values ranged from 0.921 to 0.944 across cutoff years 2010–2013, confirming stable predictive performance regardless of the specific train–test boundary.
+
+---
+
+## Limitations and Scope
+
+- **Scope**: Supervised regression on the cleaned, lag-free dataset with a temporal split (train ≤ 2013, test ≥ 2014).
+- **External validity**: Confined to populations and years represented in the WHO dataset.
+- **Associational, not causal**: Feature importances reflect predictive utility, not intervention effects.
+- **Residual confounding**: Unobserved factors such as healthcare policy changes, conflict, or reporting inconsistencies may influence results.
+- **Misspecification risk**: Model diagnostics and robustness checks reduce but do not eliminate this risk.
+- **Development-status heterogeneity**: Separate models for developed vs. developing countries may improve performance but were not pursued.
+
+---
+
+## Draft Presentation Figures
+
+The synthesis pipeline generates a four-panel figure saved to `images/week6_presentation_figures.png`:
+
+![Week 6 Presentation Figures](images/week6_presentation_figures.png)
+
+**Panel descriptions**:
+- **Top-left**: Model leaderboard ranked by Test R² — Gradient Boosting with engineered features leads
+- **Top-right**: Generalization gap (Train R² − Test R²) — ensemble models show larger gaps than linear models but still within acceptable range
+- **Bottom-left**: Actual vs. Predicted scatter plot for the selected model — points cluster tightly along the diagonal
+- **Bottom-right**: Temporal robustness curve — Test R² steadily increases as more training years are included
+
+---
+
+## Saved Artifacts
+
+| Artifact | Path |
+|----------|------|
+| Final trained model | `Assets/week6_final_model.joblib` |
+| Model metadata (JSON) | `CSV outputs/week6_final_model_metadata.json` |
+| Ranked model summary (CSV) | `CSV outputs/week6_final_model_summary.csv` |
+| Interpretation & limitations (TXT) | `CSV outputs/week6_interpretation_limitations.txt` |
+| Presentation figure (PNG) | `images/week6_presentation_figures.png` |
+
+---
+
+## Week 6 Deliverable Checklist
+
+- [x] Final model(s) and justification for stopping
+- [x] Substantive interpretation of results
+- [x] Clear limitations and scope
+- [x] Draft presentation figures
+- [x] Near-final GitHub repository
+
+---
+
+## Conclusion
+
+Week 6 finalizes the modeling pipeline. The Gradient Boosting model with engineered features has been selected as the final model, supported by a clear stopping justification grounded in diminishing marginal returns across model families and feature sets. The substantive interpretation connects statistical findings to meaningful public health narratives — adult mortality burden, education access, and economic resources are the strongest factors associated with life expectancy differences across nations. All artifacts, metadata, and presentation figures have been saved, bringing the repository to a near-final state ready for the final presentation.
