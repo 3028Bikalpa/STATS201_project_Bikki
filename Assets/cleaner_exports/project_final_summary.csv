@@ -1,0 +1,2 @@
+best_model,best_feature_set,test_r2,test_rmse,test_mae,n_train,n_test,train_year_min,train_year_max,test_year_min,test_year_max
+"Random Forest (n_estimators=300, max_depth=15)",log_enhanced,0.9884790153602158,0.7541407630445216,0.5217307886901014,3456,768,2000,2017,2018,2021
