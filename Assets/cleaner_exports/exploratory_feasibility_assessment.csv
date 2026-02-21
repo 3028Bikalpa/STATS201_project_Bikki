@@ -1,0 +1,10 @@
+check,value,interpretation
+rows,4224.0,Sample size for model training/evaluation
+countries,192.0,Cross-country coverage
+years,22.0,Temporal coverage
+predictor_count,12.0,Number of candidate predictors
+rows_per_predictor,352.0,Higher is generally better for stable estimation
+target_std,8.379,Target variability available to learn
+mean_raw_missing_pct,9.562,Average missingness in uncleaned merged panel
+mean_clean_missing_pct,0.0,Average missingness after cleaning
+high_corr_feature_pairs_abs_ge_0.85,2.0,Potential multicollinearity risk pairs

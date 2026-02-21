@@ -1,0 +1,8 @@
+metric,value
+raw_rows,4532
+raw_countries,206
+raw_features,14
+clean_rows,4224
+clean_countries,192
+kept_features,13
+dropped_features,1

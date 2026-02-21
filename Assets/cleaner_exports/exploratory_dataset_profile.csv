@@ -1,0 +1,17 @@
+column,role,description,dtype,missing_pct,n_unique
+Country,identifier,Canonical country name,str,0.0,192
+ISO3,identifier,Country ISO3 code,str,0.0,192
+Year,time index,Observation year,int64,0.0,22
+life_expectancy,target,Life expectancy at birth (years),float64,0.0,350
+adult_mortality_15_60,predictor,Adult mortality rate 15-60,float64,0.0,455
+alcohol_per_capita_15plus,predictor,Alcohol use per capita (15+),float64,0.0,154
+che_pct_gdp,predictor,Current health expenditure (% GDP),float64,0.0,998
+hepb3_coverage_pct,predictor,HepB3 immunization coverage,float64,0.0,93
+pol3_coverage_pct,predictor,Polio immunization coverage,float64,0.0,62
+dtp3_coverage_pct,predictor,DTP3 immunization coverage,float64,0.0,64
+gdp_per_capita_2015usd,predictor,GDP per capita (constant 2015 USD),float64,0.0,4034
+overweight_adults_pct,predictor,Overweight prevalence in adults,float64,0.0,745
+underweight_adults_pct,predictor,Underweight prevalence in adults,float64,0.0,264
+thinness_children_adolescents_pct,predictor,Thinness prevalence in children/adolescents,float64,0.0,202
+infant_deaths,predictor,Number of infant deaths,float64,0.0,2974
+u5_mortality_rate,predictor,Under-five mortality rate,float64,0.0,1131

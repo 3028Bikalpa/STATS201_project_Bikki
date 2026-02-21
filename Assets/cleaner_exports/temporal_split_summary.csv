@@ -1,0 +1,3 @@
+split,rows,countries,year_min,year_max,feature_count
+train,3456,192,2000,2017,15
+test,768,192,2018,2021,15

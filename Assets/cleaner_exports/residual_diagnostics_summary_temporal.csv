@@ -1,0 +1,7 @@
+metric,value
+Shapiro_Wilk_stat,0.9209911319162163
+Shapiro_Wilk_p,1.2882773649462744e-19
+Breusch_Pagan_stat,36.63304963837831
+Breusch_Pagan_p,0.00025615298400494073
+Durbin_Watson,1.674107788823954
+High_Influence_Count_CooksD_gt_0_5,0.0
