@@ -1,8 +1,0 @@
-{
-  "selected_model": "Gradient Boosting",
-  "selected_feature_set": "Engineered",
-  "best_test_r2": 0.94365,
-  "generalization_gap_r2": 0.04317,
-  "margin_over_runner_up_test_r2": 0.00549,
-  "stopping_reason": "Stop because additional model families/feature sets show no meaningful Test R2 gain (<= 0.01 margin) relative to the selected model while preserving similar or worse generalization gap."
-}
