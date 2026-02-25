@@ -3,7 +3,7 @@ Best model: Random Forest (n_estimators=300, max_depth=15) | feature set: log_en
 Best Test_R2: 0.988479
 Best Test_RMSE: 0.754141
 Best R2_Gap: 0.011215
-Runner-up marginal Test_R2 gain: 2.563220073847905e-05
+Runner-up marginal Test_R2 gain: 2.5632200738368027e-05
 Min temporal sensitivity Test_R2: 0.9884487426801921
 Criteria: marginal_gain<0.005, R2_Gap<=0.03, min_temporal_R2>=0.9
 Decision: STOP and freeze final model

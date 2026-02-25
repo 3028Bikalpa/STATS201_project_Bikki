@@ -1,0 +1,6 @@
+Scenario,Removed_Group,Test_R2,R2_Drop_vs_Baseline
+Drop Economic,Economic,0.7260887331638057,0.12077061214391127
+Drop Nutrition/Risk,Nutrition/Risk,0.7480474563761966,0.09881188893152038
+Drop Behavioral,Behavioral,0.8388588490033424,0.008000496304374605
+Drop Immunization,Immunization,0.8391624495546328,0.0076968957530841875
+Baseline (All 9),None,0.846859345307717,0.0
