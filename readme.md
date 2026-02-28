@@ -1,241 +1,237 @@
-# STATS 201 Project: Life Expectancy Modeling, Robustness, and 2030 Projections
+# Predicting National Life Expectancy
 
-This project builds a reproducible country-year machine learning pipeline to predict life expectancy, evaluate modeling choices on future years, test reviewer-driven alternative specifications, and extend predictions to 2030 under scenario assumptions.
+**Author:** Bikalpa Panthi  
+**Course:** STATS 201 — Introduction to Machine Learning for Social Science  
+**Term:** Spring 2025
 
-## 1) Research Question
-Which socioeconomic and health-system indicators most strongly predict national life expectancy, and which modeling/feature-engineering choices generalize best to unseen future years?
+---
 
-## 2) Executive Summary
-- Final selected model: `Random Forest (n_estimators=300, max_depth=15)`
-- Final selected feature representation: `log_enhanced`
-- Validation protocol: strict temporal holdout
-  - Train: `2000-2017` (`n=3456` country-years)
-  - Test: `2018-2021` (`n=768` country-years)
-- Final test metrics:
-  - `R² = 0.9885`
-  - `RMSE = 0.7541` years
-  - `MAE = 0.5217` years
-- Generalization gap (`Train_R² - Test_R²`): `0.0112`
-- Final-model decision rule from notebook: stop when marginal gain is negligible and robustness remains high (`min temporal R² >= 0.9`, `R² gap <= 0.03`).
+## 📄 Project Report
 
-Primary exported evidence:
-- `Assets/cleaner_exports/project_final_summary.csv`
-- `Assets/cleaner_exports/model_comparison_temporal.csv`
-- `Assets/cleaner_exports/final_model_justification_temporal.txt`
+👉 **[View the Full Report on GitHub Pages](https://github.com/3028Bikalpa/STATS201_project_Bikki)**
 
-## 3) Data Sources and Coverage
-Raw files are in `Assets/full_data/` and include mortality, immunization, nutrition, alcohol, health-expenditure, and GDP/population indicators.
+---
 
-### Coverage after cleaning
-- Raw panel: `4532` rows, `206` countries, `14` input features
-- Clean panel: `4224` rows, `192` countries
-- Features retained: `13`
-- Dropped feature: `hiv_prev_15_49_pct`
-- Dropped countries: `14` very low-coverage entities (from `dropped_countries.csv`)
+## Project Summary
 
-Sources:
-- `Assets/cleaner_exports/health_panel_dropped_summary.csv`
-- `Assets/cleaner_exports/dropped_features.csv`
-- `Assets/cleaner_exports/dropped_countries.csv`
+This project uses machine learning to predict national life expectancy from socioeconomic and health-system indicators, using panel data from the **WHO Global Health Observatory** covering **192 countries** across **22 years** (2000–2021).
 
-## 4) Methodology and Key Choices
+Seven regression models are compared across three feature representations (baseline, log-enhanced, polynomial) to answer: **Which indicators most strongly predict life expectancy, and how do different modeling strategies affect performance?**
 
-### A. Data cleaning choice (from `Codes/data_cleaning.ipynb`)
-Why these thresholds were used:
-- Drop features with missingness `> 40%`: remove highly incomplete signals likely to add noise.
-- Drop countries with completeness `< 60%`: avoid unstable country series.
-- Impute remaining gaps via country-wise interpolation + year-median fallback: preserve temporal continuity while minimizing data loss.
+### Key Findings
 
-### B. Validation choice
-Why a temporal split (not random split):
-- Objective is future-year prediction.
-- Random splits would leak near-future structure into training.
-- Temporal holdout (`2000-2017` -> `2018-2021`) better reflects real deployment.
+- **Random Forest with log-enhanced features achieves R² = 0.988** (RMSE = 0.754 years) on the temporal holdout test set (2018–2021).
+- **Mortality indicators dominate prediction** — adult mortality alone accounts for the vast majority of the Random Forest's predictive signal.
+- **When mortality is removed**, GDP × health expenditure interactions become the top predictor, and the model still achieves **R² = 0.875** (RMSE = 2.48 years).
+- **Conflict/pandemic shock proxies** add little incremental predictive power in this setup.
 
-### C. Feature-engineering choice
-Representations compared in training:
-- `baseline`
-- `log_enhanced`
-- `polynomial`
+![Model Comparison](Images/model_comparison_temporal.png)
 
-Interpretation of results:
-- Some models benefited from polynomial expansion, but the strongest overall future-year performance came from `Random Forest + log_enhanced`.
-- Model choice was not made by a single metric only; RMSE/MAE and generalization gap were also checked.
+---
 
-### D. Model families compared
-- Baselines: `DummyRegressor`, `LinearRegression`, `DecisionTreeRegressor`
-- Advanced: `RandomForest`, `GradientBoosting`, `Ridge`, `Lasso`
+## Research Question
 
-## 5) Core Model Results
-Top highlights from `model_comparison_temporal.csv`:
+> Which socioeconomic and health-system indicators most strongly predict national life expectancy, and how do different modeling strategies affect predictive performance?
 
-| Model + Feature Set | Test R² | Test RMSE | Test MAE |
-|---|---:|---:|---:|
-| Random Forest + log_enhanced | 0.9885 | 0.7541 | 0.5217 |
-| Random Forest + baseline | 0.9885 | 0.7550 | 0.5227 |
-| Gradient Boosting + polynomial | 0.9849 | 0.8634 | 0.6337 |
-| Decision Tree + baseline | 0.9770 | 1.0650 | 0.7773 |
+### Why It Matters
 
-### Why the final combination was frozen
-From `final_model_justification_temporal.txt`:
-- Runner-up gain in test R² was negligible (`~2.56e-05`)
-- R² gap remained low
-- Temporal sensitivity remained strong
-- Decision in notebook: stop adding complexity and freeze model
+A **30+ year gap** separates the highest and lowest national life expectancies globally. Understanding which factors drive this gap can inform health policy, resource allocation, and development priorities.
 
-## 6) Robustness and Diagnostics
-From `robustness_checks_temporal.csv` and diagnostics exports:
+![Life Expectancy Trend](Images/exploratory_life_expectancy_trend.png)
 
-### Temporal sensitivity (alternative cutoffs)
-- Test R² remained around `0.9884-0.9887` across multiple temporal cutoffs.
+---
 
-### Feature-group ablation
-- Removing mortality indicators produced the largest performance drop (`R² drop ~0.1404`), confirming dominant predictive signal from mortality burden variables.
+## Data
 
-### Prediction stability by test year
-- R² by year: `2018: 0.9956`, `2019: 0.9921`, `2020: 0.9855`, `2021: 0.9797`
-- Error rose in later years, consistent with greater distribution shift near 2020-2021.
+- **Source:** [WHO Global Health Observatory](https://www.who.int/data/gho)
+- **Countries:** 192 · **Years:** 22 (2000–2021)
+- **Unit of analysis:** Country × Year
+- **Target:** Life expectancy at birth (both sexes)
+- **Split:** Temporal holdout — Train: 2000–2017, Test: 2018–2021
 
-### Residual diagnostics
-- Breusch-Pagan p-value indicates heteroscedasticity signal.
-- Durbin-Watson around `1.67` indicates some residual autocorrelation.
-- No high-influence points under the notebook Cook's D threshold.
+### Finalized Variables
 
-## 7) What the Model Learned (Feature Importance)
-From `feature_importance_analysis_temporal.csv` (Random Forest, final setup):
-- `adult_mortality_15_60`: `88.09%`
-- `u5_mortality_rate`: `10.45%`
-- Remaining predictors contribute smaller but non-zero signal (GDP, nutrition, alcohol, health spending, immunization).
+| Category | Variables |
+|----------|-----------|
+| **Mortality** | adult_mortality_15_60, u5_mortality_rate, infant_deaths |
+| **Immunization** | hepb3_coverage_pct, pol3_coverage_pct, dtp3_coverage_pct |
+| **Economic** | gdp_per_capita_2015usd, che_pct_gdp |
+| **Population Risk** | overweight_adults_pct, underweight_adults_pct, thinness_children_adolescents_pct |
+| **Behavioral** | alcohol_per_capita_15plus |
 
-Interpretation choice made in project:
-- Findings are explicitly treated as predictive associations, not causal effect sizes.
+![Correlation Heatmap](Images/exploratory_correlation_heatmap.png)
 
-## 8) Projection Extension (2022-2030)
-`Codes/projection.ipynb` extends the final model with country-wise feature extrapolation.
+---
 
-### Projection design choices
-- Refit best model on the established training setup.
-- Extrapolate each predictor using linear trend over `2015-2021`.
-- Build three scenarios:
-  - `baseline`
-  - `optimistic`
-  - `pessimistic`
-- Quantify uncertainty using tree-level variation (80% interval).
+## Methods
 
-### Important interpretation constraint
-This is predictive extrapolation under trend continuity assumptions, not a causal or structural forecast.
+### Models Tested
 
-## 9) Reviewer-Response Notebooks
+| Model | Key Parameters |
+|-------|---------------|
+| Dummy Regressor | mean baseline |
+| Linear Regression | — |
+| Ridge | α = 0.01 |
+| Lasso | α = 0.001 |
+| Decision Tree | max_depth = 10 |
+| Random Forest | 300 trees, max_depth = 15 |
+| Gradient Boosting | 200 trees, max_depth = 3 |
 
-### A. No-mortality specification (`Codes/non_mortality.ipynb`)
-Purpose:
-- Address tautology/bias concerns by excluding direct mortality/death variables:
-  - `adult_mortality_15_60`
-  - `u5_mortality_rate`
-  - `infant_deaths`
-  - `log_infant_deaths`
+### Feature Representations
 
-Best no-mortality result:
-- Model: `Random Forest (300,15)`
-- Feature set: `polynomial_no_mortality`
-- Test metrics: `R² = 0.8766`, `RMSE = 2.4682`, `MAE = 1.7002`
+- **Baseline:** 12 raw features
+- **Log-enhanced:** log-transform skewed variables (GDP, infant deaths)
+- **Polynomial:** Degree-2 interactions and squared terms
 
-Meaning:
-- Predictive quality decreases substantially versus the core model, but non-mortality indicators still retain useful signal.
+---
 
-### B. Disease/conflict and shock proxies (`Codes/disease_and_conflict.ipynb`)
-Purpose:
-- Add scenario-style proxies for conflict/pandemic disruptions:
-  - `conflict_shock_proxy`
-  - `post_conflict_5y_proxy`
-  - `covid_era_dummy`
-  - `pandemic_stress_proxy`
+## Results
 
-Best augmented result:
-- Model: `Random Forest (300,15)`
-- Test metrics: `R² = 0.9884`, `RMSE = 0.7556`
+### Full Model (with mortality variables)
 
-Stress test result:
-- Mean predicted life expectancy change under pandemic stress scenario vs baseline test period: `-0.023` years.
+| Rank | Model | Features | Test R² | RMSE |
+|------|-------|----------|---------|------|
+| 1 | Random Forest | log_enhanced | 0.988 | 0.754 |
+| 2 | Random Forest | baseline | 0.988 | 0.755 |
+| 3 | Random Forest | polynomial | 0.987 | 0.813 |
+| 4 | Gradient Boosting | polynomial | 0.985 | 0.863 |
+| 5 | Gradient Boosting | log_enhanced | 0.985 | 0.865 |
 
-## 10) Notebook Execution Order (Reproducibility)
-1. `Codes/export.ipynb`
-2. `Codes/data_cleaning.ipynb`
-3. `Codes/exploratory_analysis.ipynb`
-4. `Codes/train_models.ipynb`
-5. `Codes/project_final.ipynb`
-6. `Codes/projection.ipynb`
-7. `Codes/non_mortality.ipynb`
-8. `Codes/disease_and_conflict.ipynb`
+![Predicted vs Actual](Images/prediction_analysis_temporal.png)
 
-## 11) Figures
-If images do not display in your viewer, open this file as rendered Markdown (or on GitHub), not as plain text.
+### Feature Importance
 
-### Exploratory Analysis
-![Life Expectancy Distribution](./Images/exploratory_life_expectancy_distribution.png)
-![Top Predictors vs Target](./Images/exploratory_top_predictors_vs_target.png)
-![Correlation Heatmap](./Images/exploratory_correlation_heatmap.png)
-![Life Expectancy Trend](./Images/exploratory_life_expectancy_trend.png)
+Adult mortality dominates — raising the question of whether the model is learning a near-tautological mapping.
 
-### Modeling and Diagnostics
-![Model Comparison](./Images/model_comparison_temporal.png)
-![Feature Importance](./Images/feature_importance_temporal.png)
-![Prediction Analysis](./Images/prediction_analysis_temporal.png)
-![Residual Diagnostics](./Images/residual_diagnostics_temporal.png)
-![Robustness Summary](./Images/robustness_summary_temporal.png)
+![Feature Importance](Images/feature_importance_temporal.png)
 
-### Final Notebook Summary
-![Indicator Importance Summary](./Images/project_final_indicator_importance_summary.png)
-![Top Predictor Combinations](./Images/project_final_top_combinations.png)
-![Temporal Sensitivity](./Images/project_final_temporal_sensitivity.png)
+### Without Mortality Variables
 
-### Projection Outputs
-![Global Trend to 2030](./Images/projection_global_trend.png)
-![Country Examples](./Images/projection_country_examples.png)
-![2030 Distribution](./Images/projection_distribution_2030.png)
-![Top Movers](./Images/projection_top_movers.png)
+Removing mortality indicators forces the model to rely on actionable socioeconomic variables:
 
-## 12) Repository Structure
+| Rank | Model | Features | Test R² | RMSE |
+|------|-------|----------|---------|------|
+| 1 | Random Forest | polynomial | 0.875 | 2.483 |
+| 2 | Random Forest | log_enhanced | 0.849 | 2.727 |
+| 3 | Random Forest | baseline | 0.849 | 2.729 |
 
-```text
+The top predictors shift to GDP × health expenditure interactions, immunization × GDP interactions, and nutritional status variables.
+
+![Full vs No-Mortality Comparison](Images/no_mort_full_vs_nomort_comparison.png)
+
+![No-Mortality Predicted vs Actual](Images/no_mort_pred_vs_actual.png)
+
+![No-Mortality Correlation Heatmap](Images/no_mort_correlation_heatmap.png)
+
+---
+
+## Diagnostics and Robustness
+
+### Residual Diagnostics
+
+![Residual Diagnostics](Images/residual_diagnostics_temporal.png)
+
+![No-Mortality Residuals](Images/no_mort_residual_diagnostics.png)
+
+### Robustness Summary
+
+- Temporal sensitivity analysis across different cutoff years shows stable performance
+- Low R² gap (< 0.02) indicates minimal overfitting
+- Model remains strong even with reduced training data
+
+![Robustness Summary](Images/robustness_summary_temporal.png)
+
+### Country-Level Errors (No-Mortality Model)
+
+![Country Errors](Images/no_mort_country_errors.png)
+
+---
+
+## Repository Structure
+
+```
 STATS201/
-  Assets/
-    full_data/
-    cleaner_exports/
-  Codes/
-    export.ipynb
-    data_cleaning.ipynb
-    exploratory_analysis.ipynb
-    train_models.ipynb
-    project_final.ipynb
-    projection.ipynb
-    non_mortality.ipynb
-    disease_and_conflict.ipynb
-  Images/
-  README.md
+├── Assets/
+│   └── cleaner_exports/             # Raw and cleaned data files
+│       ├── health_panel_2000_2021.csv
+│       ├── health_panel_ml_clean.csv
+│       ├── health_panel_ml_numeric.csv
+│       ├── train_temporal.csv
+│       └── test_temporal.csv
+├── Codes/
+│   ├── export.ipynb                 # Data collection from WHO/World Bank sources
+│   ├── data_cleaning.ipynb          # Cleaning, imputation, feature engineering
+│   ├── exploratory_analysis.ipynb   # EDA, correlations, feasibility assessment
+│   ├── train_models.ipynb           # Full model comparison (7 models × 3 representations)
+│   ├── non_mortality.ipynb          # Analysis without mortality variables
+│   ├── disease_and_conflict.ipynb   # Conflict/pandemic shock proxy analysis
+│   ├── projection.ipynb             # Life expectancy projections to 2030
+│   └── project_final.ipynb          # Final synthesis and reporting
+├── Images/                          # All generated figures
+├── .gitignore
+└── README.md
 ```
 
-## 13) Main Exported Files
-- Data panels:
-  - `Assets/cleaner_exports/health_panel_2000_2021.csv`
-  - `Assets/cleaner_exports/health_panel_ml_clean.csv`
-  - `Assets/cleaner_exports/health_panel_ml_numeric.csv`
-- Split files:
-  - `Assets/cleaner_exports/train_temporal_2000_2017.csv`
-  - `Assets/cleaner_exports/test_temporal_2018_2021.csv`
-- Modeling outputs:
-  - `Assets/cleaner_exports/model_comparison_temporal.csv`
-  - `Assets/cleaner_exports/feature_importance_analysis_temporal.csv`
-  - `Assets/cleaner_exports/robustness_checks_temporal.csv`
-  - `Assets/cleaner_exports/residual_diagnostics_summary_temporal.csv`
-  - `Assets/cleaner_exports/final_model_temporal.joblib`
-- Projection outputs:
-  - `Assets/cleaner_exports/projection_baseline_2022_2030.csv`
-  - `Assets/cleaner_exports/projection_scenarios_2030.csv`
-  - `Assets/cleaner_exports/projection_all_scenarios_2022_2030.csv`
+---
 
-## 14) Limitations
-- Predictive analysis only; no causal identification.
-- Country-year aggregates hide within-country heterogeneity.
-- Extrapolation to 2030 assumes continuity of recent trends.
-- Tree-level intervals do not capture full structural uncertainty.
+## Reproducing Results
+
+### Prerequisites
+
+- Python 3.10+
+- pip
+
+### Step 1: Clone and set up environment
+
+```bash
+git clone https://github.com/bikalpa-panthi/STATS201.git
+cd STATS201
+python -m venv .venv
+source .venv/bin/activate        # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### Step 2: Install dependencies
+
+If `requirements.txt` is not present, install manually:
+
+```bash
+pip install pandas numpy scikit-learn matplotlib seaborn scipy joblib openpyxl pycountry jupyter
+```
+
+### Step 3: Run notebooks in order
+
+| Order | Notebook | Purpose |
+|-------|----------|---------|
+| 1 | `Codes/export.ipynb` | Parse WHO Excel exports and World Bank CSV into panel dataset |
+| 2 | `Codes/data_cleaning.ipynb` | Clean, impute, clip outliers, create log-transformed features |
+| 3 | `Codes/exploratory_analysis.ipynb` | EDA, correlation analysis, temporal train-test split |
+| 4 | `Codes/train_models.ipynb` | Train all 7 models × 3 feature sets, evaluate on test set |
+| 5 | `Codes/non_mortality.ipynb` | Re-run analysis excluding mortality variables |
+| 6 | `Codes/disease_and_conflict.ipynb` | Add conflict/pandemic proxies and evaluate |
+| 7 | `Codes/projection.ipynb` | Project life expectancy to 2030 under multiple scenarios |
+| 8 | `Codes/project_final.ipynb` | Final synthesis, summary figures, and reporting |
+
+```bash
+cd Codes
+jupyter notebook
+```
+
+Run each notebook top-to-bottom in the order above. Notebook 1 requires raw WHO Excel files and World Bank CSV in `Assets/`. Subsequent notebooks read cleaned outputs from `Assets/cleaner_exports/`.
+
+### Data Access
+
+Raw data is sourced from:
+- **WHO GHO:** https://www.who.int/data/gho (Excel exports for each indicator)
+
+Place raw files in `Assets/` before running `export.ipynb`. The cleaned panel files in `Assets/cleaner_exports/` are included in the repository.
+
+---
+
+## References
+
+- World Health Organization. *Global Health Observatory Data Repository.* https://www.who.int/data/gho
+
+### AI Acknowledgment
+
+AI was used in writing some of the codes along with helping to rephrase the language in the report. The major contribution of GenAI tool was in code enhancement, language rephrasing for reports (improving sentence structure and grammar), image decoration (enhancing the designs of the images that resulted as an output of the codes) and writing of code outside the scope of STATS 201 class at DKU.
