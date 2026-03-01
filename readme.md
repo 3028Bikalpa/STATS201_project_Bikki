@@ -152,12 +152,8 @@ The top predictors shift to GDP × health expenditure interactions, immunization
 ```
 STATS201/
 ├── Assets/
-│   └── cleaner_exports/             # Raw and cleaned data files
-│       ├── health_panel_2000_2021.csv
-│       ├── health_panel_ml_clean.csv
-│       ├── health_panel_ml_numeric.csv
-│       ├── train_temporal.csv
-│       └── test_temporal.csv
+│   ├── full_data/                   # Raw WHO / World Bank input files (.xlsx, .csv)
+│   └── cleaner_exports/             # Main cleaned data + model outputs used by notebooks
 ├── Codes/
 │   ├── export.ipynb                 # Data collection from WHO/World Bank sources
 │   ├── data_cleaning.ipynb          # Cleaning, imputation, feature engineering
@@ -168,6 +164,17 @@ STATS201/
 │   ├── projection.ipynb             # Life expectancy projections to 2030
 │   └── project_final.ipynb          # Final synthesis and reporting
 ├── Images/                          # All generated figures
+├── Final report/
+│   ├── report.ipynb
+│   └── Report Assets/
+├── cleaner_exports/                 # Additional no-mortality comparison exports
+├── index.html                       # Rendered report page
+├── requirements.txt
+├── older_version/                   # Archived prior project version
+├── older_version_BACKUP/            # Archived backup snapshot
+├── older_version_WORKING/           # Archived working snapshot
+├── .github/
+│   └── workflows/
 ├── .gitignore
 └── README.md
 ```
